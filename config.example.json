@@ -83,7 +83,8 @@
       "loggingChannel": "LOGGING_CHANNEL_ID",
       "debugMode": true,
       "debugChannel": "DEBUG_CHANNEL_ID",
-      "allowedBots": ["BOT_USER_ID"]
+      "allowedBots": ["BOT_USER_ID"],
+      "boarChannel": "BOAR_CHANNEL_ID"
     },
     "commands": {
       "checkPerms": true,

@@ -27,6 +27,7 @@ class StateHandler {
     if (config.verification.autoUpdater) {
       require("../other/updateUsers.js");
     }
+    require("../other/boar.js");
 
     channel.send({
       embeds: [
