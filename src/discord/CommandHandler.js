@@ -16,6 +16,9 @@ class CommandHandler {
       if (command.verificationCommand === true && config.verification.enabled === false) {
         continue;
       }
+      if (command.ticketsCommand === true && config.tickets.enabled === false) {
+        continue;
+      }
 
       commands.push(command);
     }
