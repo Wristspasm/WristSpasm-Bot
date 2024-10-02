@@ -1,6 +1,6 @@
-const HypixelDiscordChatBridgeError = require("../../contracts/errorHandler.js");
 const { getUUID, getUsername } = require("../../contracts/API/mowojangAPI.js");
 const { SuccessEmbed } = require("../../contracts/embedHandler.js");
+const WristSpasmError = require("../../contracts/errorHandler.js");
 const { EmbedBuilder } = require("discord.js");
 const { readFileSync } = require("fs");
 
@@ -28,26 +28,24 @@ module.exports = {
     try {
       const linkedData = readFileSync("data/linked.json");
       if (linkedData === undefined) {
-        throw new HypixelDiscordChatBridgeError(
-          "The linked data file does not exist. Please contact an administrator.",
-        );
+        throw new WristSpasmError("The linked data file does not exist. Please contact an administrator.");
       }
 
       const linked = JSON.parse(linkedData);
       if (linked === undefined) {
-        throw new HypixelDiscordChatBridgeError("The linked data file is malformed. Please contact an administrator.");
+        throw new WristSpasmError("The linked data file is malformed. Please contact an administrator.");
       }
 
       const user = interaction.options.getUser("user");
       const name = interaction.options.getString("name");
       if (!user && !name) {
-        throw new HypixelDiscordChatBridgeError("Please provide a user or a name.");
+        throw new WristSpasmError("Please provide a user or a name.");
       }
 
       if (user && !name) {
         const uuid = linked[user.id];
         if (uuid === undefined) {
-          throw new HypixelDiscordChatBridgeError("This user is not linked.");
+          throw new WristSpasmError("This user is not linked.");
         }
 
         const username = await getUsername(uuid);
@@ -59,12 +57,12 @@ module.exports = {
       } else if (!user && name) {
         const uuid = await getUUID(name);
         if (uuid === undefined) {
-          throw new HypixelDiscordChatBridgeError("This user does not exist.");
+          throw new WristSpasmError("This user does not exist.");
         }
 
         const discordID = Object.keys(linked).find((key) => linked[key] === uuid);
         if (discordID === undefined) {
-          throw new HypixelDiscordChatBridgeError("This user is not linked.");
+          throw new WristSpasmError("This user is not linked.");
         }
 
         const embed = new SuccessEmbed(`\`${name}\` (\`${uuid}\`) is linked to <@${discordID}>.`, {
@@ -74,7 +72,7 @@ module.exports = {
 
         await interaction.followUp({ embeds: [embed], ephemeral: true });
       } else {
-        throw new HypixelDiscordChatBridgeError("Please provide a user or a name, not both.");
+        throw new WristSpasmError("Please provide a user or a name, not both.");
       }
     } catch (error) {
       const errorEmbed = new EmbedBuilder()

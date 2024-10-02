@@ -1,4 +1,4 @@
-const HypixelDiscordChatBridgeError = require("../../contracts/errorHandler.js");
+const WristSpasmError = require("../../contracts/errorHandler.js");
 
 module.exports = {
   name: "force-update",
@@ -18,7 +18,7 @@ module.exports = {
     const user = interaction.options.getUser("user");
     const updateRolesCommand = require("./updateCommand.js");
     if (updateRolesCommand === undefined) {
-      throw new HypixelDiscordChatBridgeError("The update command does not exist. Please contact an administrator.");
+      throw new WristSpasmError("The update command does not exist. Please contact an administrator.");
     }
 
     await updateRolesCommand.execute(interaction, user);

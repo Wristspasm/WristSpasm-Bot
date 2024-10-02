@@ -1,7 +1,7 @@
-const HypixelDiscordChatBridgeError = require("../../contracts/errorHandler.js");
-const { SuccessEmbed } = require("../../contracts/embedHandler.js");
-const { writeFileSync, readFileSync } = require("fs");
 const { getUsername } = require("../../contracts/API/mowojangAPI.js");
+const { SuccessEmbed } = require("../../contracts/embedHandler.js");
+const WristSpasmError = require("../../contracts/errorHandler.js");
+const { writeFileSync, readFileSync } = require("fs");
 const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
@@ -13,19 +13,17 @@ module.exports = {
     try {
       const linkedData = readFileSync("data/linked.json");
       if (!linkedData) {
-        throw new HypixelDiscordChatBridgeError(
-          "The linked data file does not exist. Please contact an administrator.",
-        );
+        throw new WristSpasmError("The linked data file does not exist. Please contact an administrator.");
       }
 
       const linked = JSON.parse(linkedData);
       if (!linked) {
-        throw new HypixelDiscordChatBridgeError("The linked data file is malformed. Please contact an administrator.");
+        throw new WristSpasmError("The linked data file is malformed. Please contact an administrator.");
       }
 
       const uuid = linked[interaction.user.id];
       if (uuid === undefined) {
-        throw new HypixelDiscordChatBridgeError(`You are not verified. Please run /verify to continue.`);
+        throw new WristSpasmError(`You are not verified. Please run /verify to continue.`);
       }
 
       delete linked[interaction.user.id];

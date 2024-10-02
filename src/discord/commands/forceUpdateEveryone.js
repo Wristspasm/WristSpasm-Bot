@@ -1,4 +1,4 @@
-const HypixelDiscordChatBridgeError = require("../../contracts/errorHandler.js");
+const WristSpasmError = require("../../contracts/errorHandler.js");
 const { readFileSync, writeFileSync } = require("fs");
 const { EmbedBuilder } = require("discord.js");
 
@@ -12,19 +12,17 @@ module.exports = {
     try {
       const updateRolesCommand = require("./updateCommand.js");
       if (updateRolesCommand === undefined) {
-        throw new HypixelDiscordChatBridgeError("The update command does not exist. Please contact an administrator.");
+        throw new WristSpasmError("The update command does not exist. Please contact an administrator.");
       }
 
       const linkedData = readFileSync("data/linked.json");
       if (linkedData === undefined) {
-        throw new HypixelDiscordChatBridgeError(
-          "The linked data file does not exist. Please contact an administrator.",
-        );
+        throw new WristSpasmError("The linked data file does not exist. Please contact an administrator.");
       }
 
       const linked = JSON.parse(linkedData);
       if (linked === undefined) {
-        throw new HypixelDiscordChatBridgeError("The linked data file is malformed. Please contact an administrator.");
+        throw new WristSpasmError("The linked data file is malformed. Please contact an administrator.");
       }
 
       if (doNotRespond === false) {

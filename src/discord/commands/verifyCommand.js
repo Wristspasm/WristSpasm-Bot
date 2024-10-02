@@ -1,5 +1,5 @@
-const HypixelDiscordChatBridgeError = require("../../contracts/errorHandler.js");
 const hypixelRebornAPI = require("../../contracts/API/HypixelRebornAPI.js");
+const WristSpasmError = require("../../contracts/errorHandler.js");
 const { writeFileSync, readFileSync } = require("fs");
 const config = require("../../../config.json");
 const { EmbedBuilder } = require("discord.js");
@@ -21,14 +21,12 @@ module.exports = {
     try {
       const linkedData = readFileSync("data/linked.json");
       if (linkedData === undefined) {
-        throw new HypixelDiscordChatBridgeError(
-          "The linked data file does not exist. Please contact an administrator.",
-        );
+        throw new WristSpasmError("The linked data file does not exist. Please contact an administrator.");
       }
 
       const linked = JSON.parse(linkedData);
       if (linked === undefined) {
-        throw new HypixelDiscordChatBridgeError("The linked data file is malformed. Please contact an administrator.");
+        throw new WristSpasmError("The linked data file is malformed. Please contact an administrator.");
       }
 
       if (bypassChecks === true && user !== undefined) {
@@ -39,9 +37,7 @@ module.exports = {
         if (bypassChecks === true) {
           delete linked[interaction.user.id];
         } else {
-          throw new HypixelDiscordChatBridgeError(
-            "You are already linked to a Minecraft account. Please run /unverify first.",
-          );
+          throw new WristSpasmError("You are already linked to a Minecraft account. Please run /unverify first.");
         }
       }
 
@@ -51,7 +47,7 @@ module.exports = {
         if (bypassChecks === true) {
           delete linked[Object.keys(linked).find((key) => linked[key] === uuid)];
         } else {
-          throw new HypixelDiscordChatBridgeError(
+          throw new WristSpasmError(
             "This player is already linked to a Discord account. Please contact an administrator.",
           );
         }
@@ -59,18 +55,18 @@ module.exports = {
 
       const discordUsername = socialMedia.find((media) => media.id === "DISCORD")?.link;
       if (discordUsername === undefined && bypassChecks !== true) {
-        throw new HypixelDiscordChatBridgeError("This player does not have a Discord linked.");
+        throw new WristSpasmError("This player does not have a Discord linked.");
       }
 
       if (discordUsername?.toLowerCase() != interaction.user.username && bypassChecks !== true) {
-        throw new HypixelDiscordChatBridgeError(
+        throw new WristSpasmError(
           `The player '${nickname}' has linked their Discord account to a different account ('${discordUsername}').`,
         );
       }
 
       const linkedRole = guild.roles.cache.get(config.verification.verifiedRole);
       if (linkedRole === undefined) {
-        throw new HypixelDiscordChatBridgeError("The verified role does not exist. Please contact an administrator.");
+        throw new WristSpasmError("The verified role does not exist. Please contact an administrator.");
       }
 
       linked[interaction.user.id] = uuid;
@@ -89,7 +85,7 @@ module.exports = {
 
       const updateRolesCommand = require("./updateCommand.js");
       if (updateRolesCommand === undefined) {
-        throw new HypixelDiscordChatBridgeError("The update command does not exist. Please contact an administrator.");
+        throw new WristSpasmError("The update command does not exist. Please contact an administrator.");
       }
 
       await updateRolesCommand.execute(interaction, user);

@@ -1,4 +1,4 @@
-const HypixelDiscordChatBridgeError = require("../../contracts/errorHandler.js");
+const WristSpasmError = require("../../contracts/errorHandler.js");
 const { EmbedBuilder } = require("discord.js");
 const config = require("../../../config.json");
 const fs = require("fs");
@@ -10,7 +10,7 @@ module.exports = {
 
   execute: async (interaction) => {
     if (bot === undefined || bot._client.chat === undefined) {
-      throw new HypixelDiscordChatBridgeError("Bot doesn't seem to be connected to Hypixel. Please try again.");
+      throw new WristSpasmError("Bot doesn't seem to be connected to Hypixel. Please try again.");
     }
 
     const commands = interaction.client.commands;

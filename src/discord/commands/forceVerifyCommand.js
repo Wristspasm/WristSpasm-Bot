@@ -1,4 +1,4 @@
-const HypixelDiscordChatBridgeError = require("../../contracts/errorHandler.js");
+const WristSpasmError = require("../../contracts/errorHandler.js");
 
 module.exports = {
   name: "force-verify",
@@ -24,7 +24,7 @@ module.exports = {
     const user = interaction.options.getUser("user");
     const verifyCommand = require("./verifyCommand.js");
     if (verifyCommand === undefined) {
-      throw new HypixelDiscordChatBridgeError("The verify command does not exist. Please contact an administrator.");
+      throw new WristSpasmError("The verify command does not exist. Please contact an administrator.");
     }
 
     await verifyCommand.execute(interaction, user, true);

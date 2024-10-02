@@ -1,4 +1,4 @@
-const HypixelDiscordChatBridgeError = require("../../contracts/errorHandler.js");
+const WristSpasmError = require("../../contracts/errorHandler.js");
 
 module.exports = {
   name: "purge",
@@ -17,7 +17,7 @@ module.exports = {
   execute: async (interaction) => {
     const amount = interaction.options.getInteger("amount") ?? 5;
     if (amount < 1 || amount > 100) {
-      throw new HypixelDiscordChatBridgeError("You can only purge between 1 and 100 messages.");
+      throw new WristSpasmError("You can only purge between 1 and 100 messages.");
     }
 
     await interaction.channel.bulkDelete(amount);

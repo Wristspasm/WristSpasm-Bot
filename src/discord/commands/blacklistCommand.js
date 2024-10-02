@@ -1,5 +1,5 @@
-const HypixelDiscordChatBridgeError = require("../../contracts/errorHandler.js");
 const { SuccessEmbed } = require("../../contracts/embedHandler.js");
+const WristSpasmError = require("../../contracts/errorHandler.js");
 
 module.exports = {
   name: "blacklist",
@@ -40,7 +40,7 @@ module.exports = {
     } else if (arg == "remove") {
       bot.chat(`/ignore remove ${name}`);
     } else {
-      throw new HypixelDiscordChatBridgeError("Invalid Usage: `/ignore [add/remove] [name]`.");
+      throw new WristSpasmError("Invalid Usage: `/ignore [add/remove] [name]`.");
     }
 
     const embed = new SuccessEmbed(

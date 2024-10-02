@@ -1,4 +1,4 @@
-const HypixelDiscordChatBridgeError = require("../../contracts/errorHandler.js");
+const WristSpasmError = require("../../contracts/errorHandler.js");
 const { ErrorEmbed } = require("../../contracts/embedHandler.js");
 // eslint-disable-next-line no-unused-vars
 const { CommandInteraction } = require("discord.js");
@@ -16,26 +16,26 @@ module.exports = {
         const memberRoles = interaction.member.roles.cache.map((role) => role.id);
         await interaction.deferReply({ ephemeral: false }).catch(() => {});
         if (memberRoles.some((role) => config.discord.commands.blacklistRoles.includes(role))) {
-          throw new HypixelDiscordChatBridgeError("You are blacklisted from the bot.");
+          throw new WristSpasmError("You are blacklisted from the bot.");
         }
 
         const command = interaction.client.commands.get(interaction.commandName);
         if (command === undefined) {
           return;
         }
-        
+
         Logger.discordMessage(`${interaction.user.username} - [${interaction.commandName}]`);
 
         if (command.verificationCommand === true && config.verification.enabled === false) {
-          throw new HypixelDiscordChatBridgeError("Verification is disabled.");
+          throw new WristSpasmError("Verification is disabled.");
         }
 
         if (command.moderatorOnly === true && isModerator(interaction) === false) {
-          throw new HypixelDiscordChatBridgeError("You don't have permission to use this command.");
+          throw new WristSpasmError("You don't have permission to use this command.");
         }
 
         if (command.requiresBot === true && isBotOnline() === false) {
-          throw new HypixelDiscordChatBridgeError("Bot doesn't seem to be connected to Hypixel. Please try again.");
+          throw new WristSpasmError("Bot doesn't seem to be connected to Hypixel. Please try again.");
         }
 
         await command.execute(interaction);
@@ -44,7 +44,7 @@ module.exports = {
       console.log(error);
 
       const errrorMessage =
-        error instanceof HypixelDiscordChatBridgeError
+        error instanceof WristSpasmError
           ? ""
           : "Please try again later. The error has been sent to the Developers.\n\n";
 
@@ -52,7 +52,7 @@ module.exports = {
 
       await interaction.editReply({ embeds: [errorEmbed] });
 
-      if (error instanceof HypixelDiscordChatBridgeError === false) {
+      if (error instanceof WristSpasmError === false) {
         const username = interaction.user.username ?? interaction.user.tag ?? "Unknown";
         const commandOptions = JSON.stringify(interaction.options.data) ?? "Unknown";
         const commandName = interaction.commandName ?? "Unknown";

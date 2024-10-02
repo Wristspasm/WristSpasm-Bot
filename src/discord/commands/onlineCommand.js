@@ -1,5 +1,5 @@
+const WristSpasmError = require("../../contracts/errorHandler.js");
 const { Embed } = require("../../contracts/embedHandler.js");
-const HypixelDiscordChatBridgeError = require("../../contracts/errorHandler.js");
 
 module.exports = {
   name: "online",
@@ -8,7 +8,7 @@ module.exports = {
 
   execute: async (interaction) => {
     if (bot === undefined || bot._client.chat === undefined) {
-      throw new HypixelDiscordChatBridgeError("Bot doesn't seem to be connected to Hypixel. Please try again.");
+      throw new WristSpasmError("Bot doesn't seem to be connected to Hypixel. Please try again.");
     }
 
     const cachedMessages = [];

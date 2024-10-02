@@ -1,7 +1,7 @@
-class HypixelDiscordChatBridgeError extends Error {
+class WristSpasmError extends Error {
   constructor(message, source) {
     super(message);
-    this.name = "HypixelDiscordChatBridgeError";
+    this.name = "WristSpasmError";
     this.source = source;
   }
 
@@ -10,4 +10,4 @@ class HypixelDiscordChatBridgeError extends Error {
   }
 }
 
-module.exports = HypixelDiscordChatBridgeError;
+module.exports = WristSpasmError;

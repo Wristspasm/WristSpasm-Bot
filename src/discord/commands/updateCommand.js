@@ -1,7 +1,7 @@
-const HypixelDiscordChatBridgeError = require("../../contracts/errorHandler.js");
 const hypixelRebornAPI = require("../../contracts/API/HypixelRebornAPI.js");
 const { replaceVariables } = require("../../contracts/helperFunctions.js");
 const { SuccessEmbed } = require("../../contracts/embedHandler.js");
+const WristSpasmError = require("../../contracts/errorHandler.js");
 const { EmbedBuilder } = require("discord.js");
 const config = require("../../../config.json");
 const { readFileSync } = require("fs");
@@ -15,14 +15,12 @@ module.exports = {
     try {
       const linkedData = readFileSync("data/linked.json");
       if (!linkedData) {
-        throw new HypixelDiscordChatBridgeError(
-          "The linked data file does not exist. Please contact an administrator.",
-        );
+        throw new WristSpasmError("The linked data file does not exist. Please contact an administrator.");
       }
 
       const linked = JSON.parse(linkedData);
       if (!linked) {
-        throw new HypixelDiscordChatBridgeError("The linked data file is malformed. Please contact an administrator.");
+        throw new WristSpasmError("The linked data file is malformed. Please contact an administrator.");
       }
 
       if (user !== undefined) {
@@ -54,7 +52,7 @@ module.exports = {
 
         interaction.member.setNickname(null, "Updated Roles");
 
-        throw new HypixelDiscordChatBridgeError("You are not linked to a Minecraft account.");
+        throw new WristSpasmError("You are not linked to a Minecraft account.");
       }
 
       if (!interaction.member.roles.cache.has(config.verification.verifiedRole)) {
@@ -67,7 +65,7 @@ module.exports = {
       ]);
 
       if (hypixelGuild === undefined) {
-        throw new HypixelDiscordChatBridgeError("Guild not found.");
+        throw new WristSpasmError("Guild not found.");
       }
 
       const guildMember = hypixelGuild.members.find((m) => m.uuid === uuid);
